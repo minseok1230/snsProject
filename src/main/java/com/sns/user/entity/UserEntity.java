@@ -1,5 +1,7 @@
 package com.sns.user.entity;
 
+import java.time.ZonedDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,14 +36,13 @@ public class UserEntity {
 	private String name;
 	private String email;
 	
-	@Column(name = "profileImagePath")
-	private String profileImagePath;
+	
 	
 	@UpdateTimestamp
 	@Column(name = "createdAt", updatable = false)
-	private String createdAt;
+	private ZonedDateTime createdAt;
 	
 	@UpdateTimestamp
 	@Column(name = "updatedAt")
-	private String updatedAt;
+	private ZonedDateTime updatedAt;
 }

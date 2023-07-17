@@ -87,6 +87,63 @@
 				}
 			});
 		});
+		
+		// 회원가입
+		$('#signUpForm').on('submit', function(e){
+			e.preventDefault();
+			
+			// validation
+			let loginId = $('#loginId').val().trim();
+			let password = $('#password').val();
+			let confirmPassword = $('#confirmPassword').val();
+			let name = $('#name').val().trim();
+			let email = $('#email').val().trim();
+			
+			if (!loginId){
+				alert("아이디를 입력하세요");
+				return false;
+			}
+			
+			if (!password || !confirmPassword){
+				alert("비밀번호를 입력하세요");
+				return false;
+			}
+			
+			if (password != confirmPassword){
+				alert("비밀번호가 일치하지 않습니다");
+				return false;
+			}
+			
+			if (!name){
+				alert("이름을 입력하세요");
+				return false;
+			}
+			
+			if (!email){
+				alert("이메일을 입력하세요");
+				return false;
+			}
+			
+			// 아이디 중복 체크 실행 여부 
+			if ($('#idCheckOk').hasClass('d-none')){
+				alert("아이디 중복확인을 다시 해주세요");
+				return false;
+			}
+			
+			// url , 데이터 넘기기
+			let url = $(this).attr('action')
+			let params = $(this).serialize();
+			
+			$.post(url, params)
+			.done(function(data){
+				if (data.code == 1){
+					alert("가입을 환영합니다! 로그인을 해주세요");
+					location.href = "/user/sign_in_view";
+				} else{
+					alert(data.errorMessage)
+				}
+			});
+		});
 	});
 </script>
 
