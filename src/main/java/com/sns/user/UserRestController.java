@@ -3,6 +3,8 @@ package com.sns.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,6 +72,39 @@ public class UserRestController {
 			} else {
 				result.put("code", 500);
 				result.put("errorMessage", "회원가입 하는데 실패했습니다.");
+			}
+			return result;
+		}
+		
+		// 로그인
+		@PostMapping("/sign_in")
+		public Map<String, Object> signIn(
+				@RequestParam("loginId") String loginId,
+				@RequestParam("password") String password,
+				HttpSession session){
+			
+			// 비밀번호 해싱
+			String hashedPassword =  EncryptUtils.md5(password);
+			
+			// 로그인 정보 확인
+			UserEntity userEntity = userBO.getUserEntityByLoginIdPassword(loginId, hashedPassword);
+			
+			// 로그인 처리 (session)
+			Map<String, Object> result = new HashMap<>();
+
+			if (userEntity != null) {
+				// 로그인 성공
+				session.setAttribute("userId", userEntity.getId());
+				session.setAttribute("userLoginId", userEntity.getLoginId());
+				session.setAttribute("userName", userEntity.getName());
+				
+				result.put("code", 1);
+				result.put("result", "성공");
+				
+			} else {
+				// 로그인 실패
+				result.put("code", 500);
+				result.put("errorMessage", "사용자 정보가 없습니다.");
 			}
 			return result;
 		}

@@ -10,7 +10,7 @@
 				<label for="loginId">ID</label>
 				<div class="d-flex">
 					<input type="text" class="form-control col-6" id="loginId" name="loginId" placeholder="ID를 입력하세요">
-					<button type="button" id="loginIdCheckBtn" class="btn btn-success">중복확인</button><br>
+					<button type="button" id="loginIdCheckBtn" class="btn btn-primary ml-3">중복확인</button><br>
 				</div>
 				<%-- 아이디 체크 결과 --%>
 				<%-- d-none 클래스: display none (보이지 않게) --%>
@@ -21,13 +21,13 @@
 				</div>
 				
 				<!-- 비밀번호 -->
-				<label for="password">비밀번호</label>
+				<label for="password">password</label>
 				<div class="d-flex">
 					<input type="password" class="form-control col-6" id="password" name="password" placeholder="비밀번호">
 				</div>
 				
 				<!-- 비밀번호 확인 -->
-				<label for="confirmPassword">비밀번호 확인</label>
+				<label for="confirmPassword">password confirm</label>
 				<div class="d-flex">
 					<input type="password" class="form-control col-6" id="confirmPassword" name="confirmPassword" placeholder="비밀번호">
 				</div>
@@ -44,7 +44,7 @@
 					<input type="text" class="form-control col-6" id="email" name="email" placeholder="이메일을 입력하세요">
 				</div>
 				
-				<button type="submit" id="signUpBtn" class="btn btn-primary">가입하기</button>				
+				<button type="submit" id="signUpBtn" class="btn btn-primary mt-4">가입하기</button>				
 			</div>
 		</form>
 	</div>

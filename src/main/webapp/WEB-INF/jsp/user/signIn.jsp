@@ -22,8 +22,10 @@
 			</div>
 			
 			<%-- btn-block: 로그인 박스 영역에 버튼을 가득 채운다. --%>
-			<input type="submit" id="loginBtn" class="btn btn-block btn-primary" value="로그인">
-			<a class="btn btn-block btn-dark" href="/user/sign_up_view">회원가입</a>
+			<div class="d-flex align-items-center justify-content-between">
+				<a class="btn  btn-dark h-100 w-50" href="/user/sign_up_view">회원가입</a>
+				<input type="submit" id="loginBtn" class="btn  btn-primary h-100 w-50" value="로그인">
+			</div>
 		</form>
 	</div>
 </div>
@@ -31,13 +33,13 @@
 <script>
 	$(document).ready(function(){
 		
-		$("loginForm").on('submit', function(e){
+		$("#loginForm").on('submit', function(e){
 			e.preventDefault();
 			
 			let loginId = $("#loginId").val().trim();
 			let password = $("#password").val();
 			
-			if (!longinId){
+			if (!loginId){
 				alert("아이디를 입력하세요");
 				return false;
 			}
@@ -48,6 +50,17 @@
 			
 			let url = $(this).attr('action');
 			let params = $(this).serialize();
+			
+			$.post(url, params)
+			.done(function(data){
+				if (data.code == 1){
+					// 로그인 성공하면 타임라인으로 이동 
+					location.href = "/timeline/timeline_view"; 
+				} else{
+					alert(data.errorMessage); 
+				}
+			});
+			
 		});
 	});
 </script>
