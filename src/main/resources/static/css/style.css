@@ -5,3 +5,54 @@ header{
 }
 .contents{min-height: 500px;}
 .sign-up-box {width:600px;}
+
+.content-box{
+	border-bottom-color: white;
+}
+
+.content-bottom{
+  	border-right: solid 1px #d2d2d2;
+ 	border-bottom: solid 1px #d2d2d2;
+  	border-left: solid 1px #d2d2d2;
+  	border-radius: 3px;
+}
+
+.content-menu{
+	background-color: #FFF0F0;
+	border-radius: 5px;
+	height:30px;
+}
+
+.comment-menu{
+	background-color: #FFDCDC;
+	border-radius: 5px;
+	height:30px;
+}
+
+/*삭제할것*/
+.image{
+	min-height:200px;
+}
+.content{
+	margin:auto;
+}
+.like{
+	font-size: 12px;
+}
+
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30x;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.w-btn-green2 {
+    background-color: #519d9e;
+    color: #9dc8c8;
+}

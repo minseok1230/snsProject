@@ -45,7 +45,7 @@ public class UserRestController {
 		}
 		
 		/**
-		 * 로그인
+		 * 회원가입
 		 * @param loginId
 		 * @param password
 		 * @param name
@@ -76,6 +76,13 @@ public class UserRestController {
 			return result;
 		}
 		
+		/**
+		 * 로그인
+		 * @param loginId
+		 * @param password
+		 * @param session
+		 * @return
+		 */
 		// 로그인
 		@PostMapping("/sign_in")
 		public Map<String, Object> signIn(
