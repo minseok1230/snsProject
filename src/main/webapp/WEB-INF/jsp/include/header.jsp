@@ -10,7 +10,9 @@
 	
 	<%-- 로그인이 된 경우에만 로그인정보/로그아웃 노출 --%>
 		<c:if test="${not empty userName}">
-			<span>${userName}님 안녕하세요</span> 
+			<span class="mr-3">${userName}님 안녕하세요</span>
+			<a href="/timeline/timeline_view" class="mr-3">전체 게시물</a>
+			<a href="/timeline/post_view" class="mr-3">나의 게시물</a>
 			<a href="/user/sign_out">로그아웃</a>
 		</c:if>
 	</div>
