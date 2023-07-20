@@ -16,5 +16,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer>{
 		// 나의 게시물
 		public List<PostEntity> findByUserIdOrderByIdDesc(int userId); 
 		
+		// 새로운 게시물 insert
+		
+		
 	
 }
