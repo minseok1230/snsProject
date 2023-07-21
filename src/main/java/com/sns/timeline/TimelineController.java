@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sns.comment.bo.CommentBO;
+import com.sns.comment.entity.CommentEntity;
 import com.sns.post.bo.PostBO;
 import com.sns.post.entity.PostEntity;
 
@@ -20,14 +22,21 @@ public class TimelineController {
 	@Autowired
 	private PostBO postBO;
 	
+	@Autowired 
+	private CommentBO commentBO;
+	
 	// 게시물작성 + 전체글
 	@GetMapping("/timeline_view")
 	public String timelineView(Model model) {
 		
-		//postList (jpa)
+		// postList (jpa)
 		List<PostEntity> postList = postBO.getPostList();
 		
+		// commentList (jpa)
+		List<CommentEntity> commentList = commentBO.getCommentList();
+		
 		//localhost:8080/timeline/timeline_view
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("postList", postList);
 		model.addAttribute("view", "/timeline/timelineList");
 		return "template/layout";

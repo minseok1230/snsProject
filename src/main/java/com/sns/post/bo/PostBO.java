@@ -23,28 +23,15 @@ public class PostBO {
 		return postRepository.findByUserIdOrderByIdDesc(userId);
 	}
 	
-	public int addPost(String content, MultipartFile file) {
+	public PostEntity addPost(int userId, String userLoginId, String content, MultipartFile file) {
 		
 		String imagePath = null;
-		return save(
-				builder()
-				.content
-				.imagePath
-				.build()
-				);
-				
-		
+		return postRepository.save(
+				PostEntity.builder()
+				.userId(userId)
+				.content(content)
+				.imagePath(imagePath)
+				.build());
+			
 	}
-	
-	
-//	public CompanyEntity addCompany(String name, String business, String scale, int headcount) {
-//		return companyRepository.save(
-//			CompanyEntity.builder()
-//				.name(name)
-//				.business(business)
-//				.scale(scale)
-//				.headcount(headcount)
-//				.build()
-//		);
-//	}
 }

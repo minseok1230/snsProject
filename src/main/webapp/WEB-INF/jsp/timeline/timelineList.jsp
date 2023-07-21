@@ -59,9 +59,12 @@
 		  	
 		  	<%-- 댓글 --%>
 			<div class="card-comment m-1">
-				<span class="font-weight-bold">댓글쓴이</span>
-				<span>댓글 내용</span>
-						
+				<c:forEach items="${commentList}" var="comment">
+					<c:if text="${post.id == comment.postid}">
+						<span class="font-weight-bold">${comment.userId}</span>
+						<span>${comment.content}</span>
+					</c:if>
+				</c:forEach>		
 				<%-- 댓글 삭제 버튼 --%>
 				<a href="#" class="comment-del-btn">
 					<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
@@ -70,8 +73,8 @@
 	  		
 	  		<%-- 댓글 쓰기 --%>
 	  		<div class="d-flex">
-	  			<input id="like" type="text" class="form-control col-11" placeholder="댓글 내용을 입력해주세요.">
-	  			<a href="#" class="mt-1 ml-2">게시</a>
+	  			<input type="text" class="comment form-control col-11" placeholder="댓글 내용을 입력해주세요.">
+	  			<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button>
 	  		</div>
 	  	</c:forEach>
   	</div>
@@ -149,7 +152,46 @@ $(document).ready(function() {
 				alert("글을 저장하는데 실패했습니다");
 		}
 		});
+	});
+	
+	$('.comment-btn').on('click', function(){
+		//alert("ddd");
 		
+		// postId 가져오기
+		let postId = $(this).data('post-id');
+		//alert(postId);
+		
+		// comment 내용 가져오기 ★★★
+		let comment = $(this).siblings('.comment').val(); 
+		//alert(comment);
+		
+		// validation
+		if (!comment){
+			alert("댓글을 입력하세요");
+			return false;
+		}
+		
+		
+		$.ajax({
+			//request
+			url: "/comment/create"
+			, data: {"postId": postId, "content": comment}
+			
+			//response
+			, success: function(data){
+				if (data.code == 1){
+					// 댓글 등록 성공
+					alert(data.result)
+				} else {
+					// 댓글 등록 실패
+					alert(data.errorMessage)
+				}
+			}
+			
+			,error: function(request, status, error){
+				alert("댓글 관리자에게 문의해주세요.");
+			}
+		});
 	});
 });
 </script>
