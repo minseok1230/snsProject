@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileManagerService {
 
 		// 실제 업로드가 된 이미지가 저장될 경로(서버 was)
-		public static final String FILE_UPLOAD_PATH = "E:\\6_Spring_Project\\sns\\workspace\\images/";
+		public static final String FILE_UPLOAD_PATH = "D:\\choiminseok\\6_spring_project\\sns\\images/";
 		
 		// input: 이미지파일(file), loginId(유일한 파일이름 만들기위해)
 		// output: imagePath

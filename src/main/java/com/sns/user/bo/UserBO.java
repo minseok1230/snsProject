@@ -17,6 +17,14 @@ public class UserBO {
 			return userRepository.findByLoginId(loginId);
 		}
 		
+		
+		// id를 통해서 가져오기
+		public UserEntity getUserEntityById(int id) {
+			return userRepository.findById(id);
+		}
+		
+		
+		
 		// 데이터 등록 (회원가입)
 		public Integer addUser(String loginId, String password, String name, String email) {
 			

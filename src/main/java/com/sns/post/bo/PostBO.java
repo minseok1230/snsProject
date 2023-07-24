@@ -46,6 +46,12 @@ public class PostBO {
 				.build());
 	}
 	
+	/**
+	 * 수정할 나의 게시물 가져오기
+	 * @param postId
+	 * @param userId
+	 * @return
+	 */
 	// 수정할 나의 게시물 가져오기
 	public PostEntity getPostByPostIdAndUserId(int postId, int userId) {
 		return postRepository.findAllByIdAndUserId(postId, userId);

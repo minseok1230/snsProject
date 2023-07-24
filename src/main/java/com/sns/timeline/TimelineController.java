@@ -14,11 +14,20 @@ import com.sns.comment.bo.CommentBO;
 import com.sns.comment.entity.CommentEntity;
 import com.sns.post.bo.PostBO;
 import com.sns.post.entity.PostEntity;
+import com.sns.timeline.bo.TimelineBO;
+import com.sns.timeline.domain.CardView;
 
 @Controller
 @RequestMapping("/timeline")
 public class TimelineController {
 
+	@Autowired
+	private TimelineBO timelineBO;
+	
+	
+	/* 댓글 삭제하기 / 댓글 내용 뿌리기 */
+	
+	// 나중에 필요없게 된다.
 	@Autowired
 	private PostBO postBO;
 	
@@ -26,21 +35,29 @@ public class TimelineController {
 	private CommentBO commentBO;
 	
 	// 게시물작성 + 전체글
+	//localhost:8080/timeline/timeline_view
 	@GetMapping("/timeline_view")
 	public String timelineView(Model model) {
 		
+		/* 비효율적인 방법 */
 		// postList (jpa)
-		List<PostEntity> postList = postBO.getPostList();
+		// List<PostEntity> postList = postBO.getPostList();
 		
 		// commentList (jpa)
-		List<CommentEntity> commentList = commentBO.getCommentList();
+		// List<CommentEntity> commentList = commentBO.getCommentList();
 		
-		//localhost:8080/timeline/timeline_view
-		model.addAttribute("commentList", commentList);
-		model.addAttribute("postList", postList);
+		// model.addAttribute("commentList", commentList);
+		// model.addAttribute("postList", postList);
+		
+		List<CardView> cardList =  timelineBO.generateCardViewList();
+		
+		model.addAttribute("cardList", cardList);
 		model.addAttribute("view", "/timeline/timelineList");
 		return "template/layout";
 	}
+	
+	
+	
 	
 	// 추가적인 나의 옵션
 	

@@ -26,15 +26,17 @@
 <%-- 게시물 --%>
 <div class="content d-flex justify-content-center">
   	<div class="w-50">
-  		<c:forEach items="${postList}" var="post">
+  	
+  		
+  		<c:forEach items="${cardList}" var="card">
 	  		<div class="content-menu mt-5 d-flex align-items-center justify-content-between">
-	  			<div class="font-weight-bold ml-2">글쓴이${post.userId}</div>
+	  			<div class="font-weight-bold ml-2">${card.user.loginId}</div>
 	  			<a href="" class="mr-2"><img width="30" src="https://www.iconninja.com/files/860/824/939/more-icon.png"></a>
 	  		</div>
 	  		
 	  		<%-- 카드 이미지 --%>
-	  		<div class="image bg-info">
-					<img src="${post.imagePath}" class="w-100" alt="본문 이미지" width="300">
+	  		<div class="image">
+					<img src="${card.post.imagePath}" class="w-100" alt="본문 이미지" width="300">
 			</div>
 	  		
 	  		<%-- 좋아요 하트  --%>
@@ -46,8 +48,8 @@
 		  	
 		  	<%-- 본문 내용 --%>
 		  	<div class="d-flex">
-		  		<div class="mr-2">${post.userId}</div>
-		  		<div>${post.content}</div>
+		  		<div class="mr-2">${card.user.loginId}</div>
+		  		<div>${card.post.content}</div>
 		  	</div>
 		  	
 		  	<%-- 댓글 제목 --%>
@@ -58,7 +60,7 @@
 		  	<%-- 댓글 --%>
 			<div class="card-comment m-1">
 				<c:forEach items="${commentList}" var="comment">
-					<c:if test="${comment.postId == post.id}">
+					<c:if test="${comment.postId == card.post.id}">
 						<div class="d-flex">
 							<div class="mr-2">
 								<span class="font-weight-bold">${comment.userId}</span>
@@ -81,6 +83,7 @@
 	  			<input type="text" class="comment form-control col-11" placeholder="댓글 내용을 입력해주세요.">
 	  			<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button>
 	  		</div>
+	  		
 	  	</c:forEach>
   	</div>
 </div>
@@ -168,8 +171,11 @@ $(document).ready(function() {
 		let postId = $(this).data('post-id');
 		//alert(postId);
 		
-		// comment 내용 가져오기 ★★★
-		let comment = $(this).siblings('.comment').val(); 
+		// comment 내용 가져오기 (1) ★★★
+		let comment = $(this).siblings('.comment').val().trim(); 
+		
+		// comment 내용 가져오기 (2) ★★★
+		//let comment = $(this).prev().val().trim();
 		//alert(comment);
 		
 		// validation
