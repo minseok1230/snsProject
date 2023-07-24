@@ -24,7 +24,7 @@ public class CommentBO {
 		}
 		
 		
-		/* 이 부분부터 다시 생각해보기!!!!! */
+		/* 댓글 select */
 		public List<CommentEntity> getCommentList(){
 			return commentRepository.findAll();
 		};

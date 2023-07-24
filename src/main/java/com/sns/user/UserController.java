@@ -40,7 +40,7 @@ public class UserController {
 		session.removeAttribute("userLoginId");
 		session.removeAttribute("userName");
 		
-		return "redirect:/user/sign_up_view";
+		return "redirect:/user/sign_in_view";
 	}
 	
 	

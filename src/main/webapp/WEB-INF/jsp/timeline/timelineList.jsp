@@ -15,9 +15,7 @@
   				
   				<%-- 업로드 된 임시 파일 이름 저장되는 곳 --%>
   				<div id="fileName" class="ml-2 mt-2"></div>
-  				
   			</div>	
-  			
   			<%-- 업로드 버튼  --%>
   			<button id="postBtn" class="w-btn w-btn-green2" type="button">업로드</button>
   		</div>
@@ -30,13 +28,13 @@
   	<div class="w-50">
   		<c:forEach items="${postList}" var="post">
 	  		<div class="content-menu mt-5 d-flex align-items-center justify-content-between">
-	  			<div class="font-weight-bold ml-2">${post.userId}</div>
+	  			<div class="font-weight-bold ml-2">글쓴이${post.userId}</div>
 	  			<a href="" class="mr-2"><img width="30" src="https://www.iconninja.com/files/860/824/939/more-icon.png"></a>
 	  		</div>
 	  		
 	  		<%-- 카드 이미지 --%>
 	  		<div class="image bg-info">
-					<img src="${post.imagePath}" class="w-100" alt="본문 이미지">
+					<img src="${post.imagePath}" class="w-100" alt="본문 이미지" width="300">
 			</div>
 	  		
 	  		<%-- 좋아요 하트  --%>
@@ -60,15 +58,22 @@
 		  	<%-- 댓글 --%>
 			<div class="card-comment m-1">
 				<c:forEach items="${commentList}" var="comment">
-					<c:if text="${post.id == comment.postid}">
-						<span class="font-weight-bold">${comment.userId}</span>
-						<span>${comment.content}</span>
-					</c:if>
+					<c:if test="${comment.postId == post.id}">
+						<div class="d-flex">
+							<div class="mr-2">
+								<span class="font-weight-bold">${comment.userId}</span>
+								<span>${comment.content}</span>
+							</div>
+							<%-- 댓글 삭제 버튼 --%>
+							<div>
+								<a href="#" class="comment-del-btn">
+									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
+								</a>
+							</div>
+						</div>
+					</c:if> 
 				</c:forEach>		
-				<%-- 댓글 삭제 버튼 --%>
-				<a href="#" class="comment-del-btn">
-					<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
-				</a>
+				
 			</div>
 	  		
 	  		<%-- 댓글 쓰기 --%>
@@ -154,6 +159,8 @@ $(document).ready(function() {
 		});
 	});
 	
+	
+	// 댓글 달기 btn 클릭
 	$('.comment-btn').on('click', function(){
 		//alert("ddd");
 		
@@ -182,6 +189,7 @@ $(document).ready(function() {
 				if (data.code == 1){
 					// 댓글 등록 성공
 					alert(data.result)
+					location.href = "/timeline/timeline_view";
 				} else {
 					// 댓글 등록 실패
 					alert(data.errorMessage)

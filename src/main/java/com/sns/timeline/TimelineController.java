@@ -42,9 +42,12 @@ public class TimelineController {
 		return "template/layout";
 	}
 	
+	// 추가적인 나의 옵션
+	
 	// 나의글 + 수정 (로그인된 사람만 볼수 있게)
 	//localhost:8080/timeline/post_view
-	@GetMapping("/post_view")
+	
+	@GetMapping("/myPost_view")
 	public String postView(HttpSession session, Model model) {
 		
 		// 로그인된 사용자 id
@@ -57,12 +60,16 @@ public class TimelineController {
 		
 		// 나의 postList (jpa)
 		List<PostEntity> myPostList = postBO.getPostListByUserId(userId);
-		
+		List<CommentEntity> commentList = commentBO.getCommentList();
 				
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("myPostList", myPostList);
 		model.addAttribute("view", "/post/postList");
 		return "template/layout";
 	}
+	
+	
+	
 	
 	
 }

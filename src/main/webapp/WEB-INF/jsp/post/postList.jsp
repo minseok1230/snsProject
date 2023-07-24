@@ -8,9 +8,9 @@
   	<div class="w-50">
   		<c:forEach items="${myPostList}" var="post">
 	  		<div class="content-menu mt-5 d-flex align-items-center justify-content-between">
-	  			<div class="font-weight-bold ml-2">${post.userId}</div>
+	  			<div class="font-weight-bold ml-2">글쓴이${post.userId}</div>
 	  			<div class="d-flex">
-		  			<a id="changeBtn">수정</a>
+		  			<a href="/post/post_detail_view?postId=${post.id}" id="postChangeBtn" class="btn btn-sm btn-secondary">수정</a>
 		  			<a href="" class="mr-2"><img width="30" src="https://www.iconninja.com/files/860/824/939/more-icon.png"></a>
 		  		</div>
 	  		</div>
@@ -40,13 +40,23 @@
 		  	
 		  	<%-- 댓글 --%>
 			<div class="card-comment m-1">
-				<span class="font-weight-bold">댓글쓴이</span>
-				<span>댓글 내용</span>
-						
-				<%-- 댓글 삭제 버튼 --%>
-				<a href="#" class="comment-del-btn">
-					<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
-				</a>
+				<c:forEach items="${commentList}" var="comment">
+					<c:if test="${comment.postId == post.id}">
+						<div class="d-flex">
+							<div class="mr-2">
+								<span class="font-weight-bold">${comment.userId}</span>
+								<span>${comment.content}</span>
+							</div>
+							<%-- 댓글 삭제 버튼 --%>
+							<div>
+								<a href="#" class="comment-del-btn">
+									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
+								</a>
+							</div>
+						</div>
+					</c:if> 
+				</c:forEach>		
+				
 			</div>
 	  		
 	  		<%-- 댓글 쓰기 --%>
@@ -57,6 +67,20 @@
 	  	</c:forEach>
   	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
