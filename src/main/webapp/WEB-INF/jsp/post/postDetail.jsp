@@ -7,7 +7,7 @@
 <div class="content d-flex justify-content-center">
   	<div class="w-50">
   		
-  		
+  			${post.id }
 	  		<%-- 카드 이미지 --%>
 	  		<c:if test="${not empty post.imagePath}">
 		  		<div class="image bg-info">
@@ -31,8 +31,8 @@
 				</div>
 				<%-- 업로드 버튼  --%>
 				<div class="d-flex">
-					<a href="/timeline/myPost_view" class="w-btn w-btn-green2">목록</a>
-					<button id="postBtn" class="w-btn w-btn-green2" type="button">수정</button>
+					<button id="listBtn" class="w-btn w-btn-green2" type="button">목록</button>
+					<button id="revisePostBtn" class="w-btn w-btn-green2" type="button">수정</button>
 				</div>
 				
 			</div>
@@ -42,6 +42,10 @@
 
 <script>
 	$(document).ready(function(){
+		/* 목록 버튼*/
+		$('#listBtn').on('click', function(){
+			location.href = "/timeline/myPost_view";
+		});
 		
 		// 파일이미지 클릭 => 숨겨져 있는 type="file"을 동작시킨다.
 		$('#fileUploadBtn').on('click', function(e) {
@@ -52,11 +56,11 @@
 		// 사용자가 이미지를 선택하는 순간 유효성 확인 및 업로드 된 파일명 노출
 		$('#file').on('change', function(e) {
 			let fileName = e.target.files[0].name; // path-g6f39ad362_640.png
-			console.log(fileName);
+			// console.log(fileName);
 			
 			// 확장자 유효성 확인
 			let ext = fileName.split(".").pop().toLowerCase();
-			alert(ext);
+			// alert(ext);
 			if (ext != "jpg" && ext != "png" && ext != "gif" && ext != "jpeg") {
 				alert("이미지 파일만 업로드 할 수 있습니다.");
 				$('#file').val("");  // 파일 태그에 파일 제거(보이지 않지만 업로드 될 수 있으므로 주의)
@@ -69,7 +73,8 @@
 		});
 		
 		
-		$('#postBtn').on('click', function(){
+		$('#revisePostBtn').on('click', function(){
+			/* postId 값을 넘겨야 하는데...ㅠㅠㅠ*/
 			let content = $('#content').val();
 			let file = $('#file').val();
 			

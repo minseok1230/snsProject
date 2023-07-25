@@ -19,8 +19,8 @@ public class UserBO {
 		
 		
 		// id를 통해서 가져오기
-		public UserEntity getUserEntityById(int id) {
-			return userRepository.findById(id);
+		public UserEntity getUserEntityById(int userId) {
+			return userRepository.findById(userId);
 		}
 		
 		

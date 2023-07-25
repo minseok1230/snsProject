@@ -24,9 +24,6 @@ public class TimelineController {
 	@Autowired
 	private TimelineBO timelineBO;
 	
-	
-	/* 댓글 삭제하기 / 댓글 내용 뿌리기 */
-	
 	// 나중에 필요없게 된다.
 	@Autowired
 	private PostBO postBO;
@@ -37,20 +34,13 @@ public class TimelineController {
 	// 게시물작성 + 전체글
 	//localhost:8080/timeline/timeline_view
 	@GetMapping("/timeline_view")
-	public String timelineView(Model model) {
-		
-		/* 비효율적인 방법 */
-		// postList (jpa)
-		// List<PostEntity> postList = postBO.getPostList();
-		
-		// commentList (jpa)
-		// List<CommentEntity> commentList = commentBO.getCommentList();
-		
-		// model.addAttribute("commentList", commentList);
-		// model.addAttribute("postList", postList);
+	public String timelineView(Model model, HttpSession session) {
 		
 		List<CardView> cardList =  timelineBO.generateCardViewList();
 		
+		int userId =  (int)session.getAttribute("userId");
+		
+		model.addAttribute("userId", userId);
 		model.addAttribute("cardList", cardList);
 		model.addAttribute("view", "/timeline/timelineList");
 		return "template/layout";
@@ -62,7 +52,7 @@ public class TimelineController {
 	// 추가적인 나의 옵션
 	
 	// 나의글 + 수정 (로그인된 사람만 볼수 있게)
-	//localhost:8080/timeline/post_view
+	//localhost:8080/timeline/mypost_view
 	
 	@GetMapping("/myPost_view")
 	public String postView(HttpSession session, Model model) {
@@ -75,12 +65,17 @@ public class TimelineController {
 			return "redirect:/timline/timeline_view";
 		}
 		
+		List<CardView> cardList =  timelineBO.generateCardViewListByUserId(userId);
+		
 		// 나의 postList (jpa)
-		List<PostEntity> myPostList = postBO.getPostListByUserId(userId);
-		List<CommentEntity> commentList = commentBO.getCommentList();
-				
-		model.addAttribute("commentList", commentList);
-		model.addAttribute("myPostList", myPostList);
+//		List<PostEntity> myPostList = postBO.getPostListByUserId(userId);
+//		List<CommentEntity> commentList = commentBO.getCommentList();
+//				
+//		model.addAttribute("commentList", commentList);
+//		model.addAttribute("myPostList", myPostList);
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("cardList", cardList);
 		model.addAttribute("view", "/post/postList");
 		return "template/layout";
 	}

@@ -52,9 +52,9 @@ public class PostRestController {
 			int userId = (int)session.getAttribute("userId");
 			String userLoginId = (String)session.getAttribute("userLoginId");
 			
-			
-			// db modify
-			
+			// userId & postId 일치할때만 변경 가능 
+			// db revise
+			//postBO.revisePost(userId, postId , userLoginId, content, file);
 			
 			Map<String, Object> result = new HashMap<>();
 			result.put("code", 1);

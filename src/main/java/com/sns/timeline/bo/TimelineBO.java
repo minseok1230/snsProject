@@ -26,36 +26,70 @@ public class TimelineBO {
 		@Autowired
 		private CommentBO commentBO;
 	
-		// input : x
-		// output : List<CardView>
-		public List<CardView> generateCardViewList(){
-			List<CardView> cardViewList = new ArrayList<>();
+		// input: X
+		// output: List<CardView>
+		public List<CardView> generateCardViewList() {
+			List<CardView> cardViewList = new ArrayList<>(); // []
 			
-			// 글 목록(전체) 가져온다.
+			// 글 목록 가져온다.
 			List<PostEntity> postList = postBO.getPostList();
 			
-			// 글 목록 반복문 순회 
-			// postEntity => cardView => cardViewList
-			for (int i = 0; i < postList.size(); i++) {
+			// 글 목록 반목문 순회
+			// postEntity => cardView   => cardViewList에 담는다.
+			for (PostEntity post : postList) {  // 0 1 2
 				// post에 대응되는 하나의 카드를 만든다.
-				CardView cardView = new CardView();
+				CardView card = new CardView();
 				
 				// 글을 세팅한다.
-				cardView.setPost(postList.get(i));
+				card.setPost(post);
 				
 				// 글쓴이를 세팅한다.
-				int userId =  cardView.getPost().getUserId();
-				UserEntity user = userBO.getUserEntityById(userId);
-				cardView.setUser(user);
+				UserEntity user = userBO.getUserEntityById(post.getUserId());
+				card.setUser(user);
 				
 				// 댓글들을 세팅한다.
-				int postId = cardView.getPost().getId();
-				List<CommentView> commentViewList = commentBO.generateCommentViewList(postId);
-				cardView.setCommentList(commentViewList);
+				List<CommentView> commentViewList = commentBO.generateCommentViewList(post.getId());
+				card.setCommentList(commentViewList);
 				
-				// ★★★★★★ cardViewList에 담는다.
-				cardViewList.add(cardView);
+				//★★★★★★ cardViewList에 담는다.
+				cardViewList.add(card);
 			}
+			
+			return cardViewList;
+		}
+		
+		
+		/* 나의 게시물 보기 */
+		
+		// input: userId
+		// output: List<CardView>
+		public List<CardView> generateCardViewListByUserId(int userId){
+			List<CardView> cardViewList = new ArrayList<>(); // []
+			
+			// 글 목록 가져온다.
+			List<PostEntity> postList = postBO.getPostListByUserId(userId);
+			
+			// 글 목록 반목문 순회
+			// postEntity => cardView   => cardViewList에 담는다.
+			for (PostEntity post : postList) {  // 0 1 2
+				// post에 대응되는 하나의 카드를 만든다.
+				CardView card = new CardView();
+				
+				// 글을 세팅한다.
+				card.setPost(post);
+				
+				// 글쓴이를 세팅한다.
+				UserEntity user = userBO.getUserEntityById(post.getUserId());
+				card.setUser(user);
+				
+				// 댓글들을 세팅한다.
+				List<CommentView> commentViewList = commentBO.generateCommentViewList(post.getId());
+				card.setCommentList(commentViewList);
+				
+				//★★★★★★ cardViewList에 담는다.
+				cardViewList.add(card);
+			}
+			
 			return cardViewList;
 		}
 }

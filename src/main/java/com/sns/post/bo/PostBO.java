@@ -28,7 +28,14 @@ public class PostBO {
 	}
 	
 	
-	// 게시물 등록 
+	/**
+	 * 게시물 등록 
+	 * @param userId
+	 * @param userLoginId
+	 * @param content
+	 * @param file
+	 * @return
+	 */
 	public PostEntity addPost(int userId, String userLoginId, String content, MultipartFile file) {
 		
 		String imagePath = null;
@@ -52,7 +59,6 @@ public class PostBO {
 	 * @param userId
 	 * @return
 	 */
-	// 수정할 나의 게시물 가져오기
 	public PostEntity getPostByPostIdAndUserId(int postId, int userId) {
 		return postRepository.findAllByIdAndUserId(postId, userId);
 	}

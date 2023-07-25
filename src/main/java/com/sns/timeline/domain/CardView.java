@@ -18,7 +18,7 @@ public class CardView {
 	// 글쓴이 정보 
 	private UserEntity user;
 	
-	// 댓글들
+	// 댓글들 (여러개)
 	private List<CommentView> commentList;
 	
 	// 좋아요들

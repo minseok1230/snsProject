@@ -1,6 +1,5 @@
 package com.sns.comment.domain;
 
-import com.sns.comment.entity.CommentEntity;
 import com.sns.user.entity.UserEntity;
 
 import lombok.Data;

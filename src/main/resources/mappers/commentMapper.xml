@@ -22,19 +22,28 @@
  		)
  	</insert>
  	
- 	<select id="selectCommentByPostId" parameterType="int" resultType="com.sns.comment.domain.Comment">
+ 	<select id="selectCommentListByPostId" parameterType="int" resultType="com.sns.comment.domain.Comment">
  		SELECT
  			`id`
 			,`postId`
 			,`userId`
 			,`content`
 			,`createdAt`
-			,`updatedAt
+			,`updatedAt`
 		FROM 
 			`comment`
 		WHERE
 			`postId` = #{postId}
  	</select>
+ 	
+ 	<delete id="deleteCommentByIdByUserId" parameterType="map">
+ 		DELETE FROM 
+ 			`comment`
+ 		WHERE 
+ 			`id` = #{id}
+ 		AND
+ 		 	`userId` = #{userId}
+ 	</delete>
  </mapper>
  
  

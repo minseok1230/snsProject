@@ -31,7 +31,13 @@
   		<c:forEach items="${cardList}" var="card">
 	  		<div class="content-menu mt-5 d-flex align-items-center justify-content-between">
 	  			<div class="font-weight-bold ml-2">${card.user.loginId}</div>
-	  			<a href="" class="mr-2"><img width="30" src="https://www.iconninja.com/files/860/824/939/more-icon.png"></a>
+	  			<div class="d-flex">
+	  			<%-- 팔로우 : 내가 이미 팔로우 하고있는사람도 안보이게 할것 --%>
+	  				<c:if test="${card.user.id != userId }">
+	  					<button class="followBtn w-btn bg-secondary" type="button">팔로우</button>
+	  				</c:if>
+	  				<a href="" class="mr-2"><img width="30" src="https://www.iconninja.com/files/860/824/939/more-icon.png"></a>
+	  			</div>
 	  		</div>
 	  		
 	  		<%-- 카드 이미지 --%>
@@ -58,30 +64,30 @@
 		  	</div>
 		  	
 		  	<%-- 댓글 --%>
+		  	
 			<div class="card-comment m-1">
-				<c:forEach items="${commentList}" var="comment">
-					<c:if test="${comment.postId == card.post.id}">
+				<c:forEach items="${card.commentList}" var="comment">
 						<div class="d-flex">
 							<div class="mr-2">
-								<span class="font-weight-bold">${comment.userId}</span>
-								<span>${comment.content}</span>
+								<span class="font-weight-bold">${comment.user.loginId}</span>
+								<span>${comment.comment.content}</span>
 							</div>
-							<%-- 댓글 삭제 버튼 --%>
-							<div>
-								<a href="#" class="comment-del-btn">
-									<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
-								</a>
-							</div>
+							<!-- 댓글 삭제 버튼 -->
+							<c:if test="${comment.comment.userId == userId}">
+								<div>
+									<a href="/comment/delete_Comment?id=${comment.comment.id}" class="comment-del-btn">
+										<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
+									</a>
+								</div>
+							</c:if>
 						</div>
-					</c:if> 
 				</c:forEach>		
-				
 			</div>
 	  		
 	  		<%-- 댓글 쓰기 --%>
 	  		<div class="d-flex">
 	  			<input type="text" class="comment form-control col-11" placeholder="댓글 내용을 입력해주세요.">
-	  			<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button>
+	  			<button type="button" class="comment-btn btn btn-light" data-post-id="${card.post.id}">게시</button>
 	  		</div>
 	  		
 	  	</c:forEach>
@@ -100,11 +106,11 @@ $(document).ready(function() {
 	// 사용자가 이미지를 선택하는 순간 유효성 확인 및 업로드 된 파일명 노출
 	$('#file').on('change', function(e) {
 		let fileName = e.target.files[0].name; // path-g6f39ad362_640.png
-		console.log(fileName);
+		// console.log(fileName);
 		
 		// 확장자 유효성 확인
 		let ext = fileName.split(".").pop().toLowerCase();
-		alert(ext);
+		// alert(ext);
 		if (ext != "jpg" && ext != "png" && ext != "gif" && ext != "jpeg") {
 			alert("이미지 파일만 업로드 할 수 있습니다.");
 			$('#file').val("");  // 파일 태그에 파일 제거(보이지 않지만 업로드 될 수 있으므로 주의)
@@ -207,6 +213,11 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	// 팔로우 버튼 클릭
+	$('.followBtn').on('click', function(){
+		//alert("ddd");
+	})
 });
 </script>
 
