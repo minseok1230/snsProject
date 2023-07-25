@@ -6,9 +6,9 @@
 <%-- 게시물 --%>
 <div class="content d-flex justify-content-center">
   	<div class="w-50">
-  		
-  			${post.id }
-	  		<%-- 카드 이미지 --%>
+  			
+  			<%-- postId를 가져오기 위해서는 model을 통해서 가져온 다음 ajax로 넘겨야한다. --%>
+  			<div class="getPostId d-none">${post.id}</div>
 	  		<c:if test="${not empty post.imagePath}">
 		  		<div class="image bg-info">
 						<img src="${post.imagePath}" class="w-100" alt="본문 이미지">

@@ -23,7 +23,7 @@ public class CommentController {
 			HttpSession session) {
 		
 		// session (userId)
-		int userId = (int)session.getAttribute("userId");
+		Integer userId = (Integer)session.getAttribute("userId");
 		
 		// db 삭제 
 		commentBO.deleteCommentByIdByUserId(id, userId);

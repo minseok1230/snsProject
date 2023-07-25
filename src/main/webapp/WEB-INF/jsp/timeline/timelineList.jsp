@@ -47,10 +47,11 @@
 	  		
 	  		<%-- 좋아요 하트  --%>
 	  		<div class="d-flex content-bottom">
-		  		<a href="#"><img width="20" src="https://www.iconninja.com/files/214/518/441/heart-icon.png"></a>
+		  		<a href="#" class="like-btn" data-like-id="${card.post.id}"><img width="20" src="https://www.iconninja.com/files/214/518/441/heart-icon.png"></a>
 		  		<a href="#"><img width="20" src="https://www.iconninja.com/files/527/809/128/heart-icon.png"></a>
-		  		<div class="like mx-3 mt-1 font-weight-bold">좋아요 11개</div>
+		  		<div class="like mx-3 mt-1 font-weight-bold">좋아요 ${card.likeCount}개</div>
 		  	</div>
+		  	
 		  	
 		  	<%-- 본문 내용 --%>
 		  	<div class="d-flex">
@@ -64,18 +65,17 @@
 		  	</div>
 		  	
 		  	<%-- 댓글 --%>
-		  	
 			<div class="card-comment m-1">
-				<c:forEach items="${card.commentList}" var="comment">
+				<c:forEach items="${card.commentList}" var="commentView">
 						<div class="d-flex">
 							<div class="mr-2">
-								<span class="font-weight-bold">${comment.user.loginId}</span>
-								<span>${comment.comment.content}</span>
+								<span class="font-weight-bold">${commentView.user.loginId}</span>
+								<span>${commentView.comment.content}</span>
 							</div>
-							<!-- 댓글 삭제 버튼 -->
-							<c:if test="${comment.comment.userId == userId}">
+							<%-- 댓글 삭제 버튼 - 로그인 된 사람의 댓글일 때 삭제 버튼 노출 --%>
+							<c:if test="${commentView.comment.userId == userId}">
 								<div>
-									<a href="/comment/delete_Comment?id=${comment.comment.id}" class="comment-del-btn">
+									<a href="/comment/delete_Comment?id=${commentView.comment.id}" data-comment-id="${commentView.comment.id}" class="comment-del-btn">
 										<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10px" height="10px">
 									</a>
 								</div>
@@ -214,10 +214,69 @@ $(document).ready(function() {
 		});
 	});
 	
+	// 댓글 삭제 (a태그 말고 ajax이용)
+	/* $('.comment-del-btn').on('click', function(e){
+		e.preventDefault();
+		let commentId =  $(this).data('comment-id');
+		
+		
+		$.ajax({
+			type: "delete"
+			, url: "/comment/delete"
+			, data: {"commentId": commentId}
+		
+			, success: function(data){
+				if (data.code == 1){
+					location.reload(true);
+				} else{
+					alert(data.errorMessage);
+				}
+			}
+			, error: function(request, status, error){
+				alert("댓글 삭제 실패했습니다.");
+			}
+		});
+	}); */
+	
+	
+	
+	$('.like-btn').on('click', function(e){
+		e.preventDefault();
+		//alert("dddd");
+		
+		// 로그인 여부 확인 
+		/* let userId = "${userId}";
+		alert(userId); */
+		
+		let likePostId =  $(this).data('like-id');
+		// alert(likePostId);
+		
+		$.ajax({
+			type: "get"
+			, url: "/like/" + likePostId
+			
+			, success: function(data){
+				if (data.code == 1){
+					location.reload(true);
+				} else if (data.code == 300) {
+					// 비로그인 시 로그인 페이지로 이동 
+					alert(data.errorMessage);
+					location.href = "/user/sign_in_view";
+				}
+			}
+			, error: function(request, status, error){
+				alert("좋아요 실패했습니다. 관리자 문의 부탁드립니다.");
+			}
+		});
+	});
+	
+	
 	// 팔로우 버튼 클릭
 	$('.followBtn').on('click', function(){
 		//alert("ddd");
 	})
+	
+	
 });
 </script>
 

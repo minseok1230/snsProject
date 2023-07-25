@@ -27,12 +27,12 @@ public class CommentBO {
 	@Autowired
 	private UserBO userBO;
 
-	// 댓글 db insert
+	/* 댓글 db insert */
 	public int addComment(int postId, int userId, String content) {
 		return commentMapper.insertComment(postId, userId, content);
 	}
 
-	/* 댓글 select */
+	/* 댓글 db select */
 	public List<CommentEntity> getCommentList() {
 		return commentRepository.findAll();
 	};

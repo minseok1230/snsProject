@@ -19,6 +19,14 @@ public class CommentRestController {
 	@Autowired
 	private CommentBO commentBO;
 	
+	
+	/**
+	 * 댓글 달기 
+	 * @param postId
+	 * @param content
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("postId") int postId,
@@ -40,6 +48,10 @@ public class CommentRestController {
 		}
 		return  result;
 	}
+	
+	// 댓글 삭제 (ajax를 통해서 할 경우)
+	
+	
 	
 	
 	
