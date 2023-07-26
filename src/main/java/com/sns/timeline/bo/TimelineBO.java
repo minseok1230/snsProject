@@ -32,6 +32,7 @@ public class TimelineBO {
 		
 		// input: X
 		// output: List<CardView>
+		// 비로그인시에도 카드리스트는 뿌려져야 하므로 Integer userId - null 허용
 		public List<CardView> generateCardViewList(Integer userId) {
 			List<CardView> cardViewList = new ArrayList<>(); // []
 			
@@ -56,10 +57,16 @@ public class TimelineBO {
 				card.setCommentList(commentViewList);
 				
 				// 좋아요 갯수 세팅 
-				int likeCounting = likeBO.countLikeByPostId(post.getId());
+				int likeCounting = likeBO.getCountLikeByPostId(post.getId());
 				card.setLikeCount(likeCounting);
 				
 				// 좋아요 하트 바꾸기 (눌렀는지 안눌렀는지)
+				
+				/* 강사님 풀이 (BO 역할 분담)*/
+//				boolean filledList = likeBO.filledLike(post.getId(), userId);
+//				card.setFilledLike(filledList);
+				
+				/* 내풀이 */
 				boolean likeView;
 				if (userId == null) {
 					likeView = false;
@@ -67,6 +74,7 @@ public class TimelineBO {
 					likeView = likeBO.generateLikeView(post.getId(), userId) ;
 				}
 				card.setFilledLike(likeView);
+				
 				
 				//★★★★★★ cardViewList에 담는다.
 				cardViewList.add(card);
@@ -104,7 +112,7 @@ public class TimelineBO {
 				card.setCommentList(commentViewList);
 				
 				// 좋아요 갯수 세팅 
-				int likeCounting = likeBO.countLikeByPostId(post.getId());
+				int likeCounting = likeBO.getCountLikeByPostId(post.getId());
 				card.setLikeCount(likeCounting);
 				
 				// 좋아요 하트 바꾸기 (눌렀는지 안눌렀는지)

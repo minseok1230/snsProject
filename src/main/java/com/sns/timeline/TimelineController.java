@@ -35,12 +35,13 @@ public class TimelineController {
 	//localhost:8080/timeline/timeline_view
 	@GetMapping("/timeline_view")
 	public String timelineView(Model model, HttpSession session) {
+		
 		Integer userId =  (Integer)session.getAttribute("userId");
 		
-		List<CardView> cardList =  timelineBO.generateCardViewList(userId);
+		List<CardView> cardViewList =  timelineBO.generateCardViewList(userId);
 		
 		model.addAttribute("userId", userId);
-		model.addAttribute("cardList", cardList);
+		model.addAttribute("cardList", cardViewList);
 		model.addAttribute("view", "/timeline/timelineList");
 		return "template/layout";
 	}

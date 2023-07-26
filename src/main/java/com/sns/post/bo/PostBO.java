@@ -68,7 +68,16 @@ public class PostBO {
 	}
 	
 	
-	// 게시물 수정하기(나의 게시글 보기)
+	/**
+	 * 게시물 수정하기(나의 게시글 보기)
+	 * @param userId
+	 * @param postId
+	 * @param userLoginId
+	 * @param content
+	 * @param file
+	 * @param preImagePath
+	 * @return
+	 */
 	// postBO.revisePost(userId, postId , userLoginId, content, file);
 	public int revisePost(int userId, int postId, String userLoginId, String content, MultipartFile file, String preImagePath) {
 		String imagePath = preImagePath;
