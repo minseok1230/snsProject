@@ -19,7 +19,7 @@ public class PostController {
 	@Autowired
 	private PostBO postBO;
 	
-	//수정하기 
+	//수정하기 (나의 게시물)
 	@GetMapping("/post_detail_view")
 	public String postDetailView(
 			@RequestParam("postId") int postId,

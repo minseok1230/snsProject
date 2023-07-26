@@ -25,27 +25,25 @@ public class TimelineController {
 	private TimelineBO timelineBO;
 	
 	// 나중에 필요없게 된다.
-	@Autowired
-	private PostBO postBO;
-	
-	@Autowired 
-	private CommentBO commentBO;
+//	@Autowired
+//	private PostBO postBO;
+//	
+//	@Autowired 
+//	private CommentBO commentBO;
 	
 	// 게시물작성 + 전체글
 	//localhost:8080/timeline/timeline_view
 	@GetMapping("/timeline_view")
 	public String timelineView(Model model, HttpSession session) {
+		Integer userId =  (Integer)session.getAttribute("userId");
 		
-		List<CardView> cardList =  timelineBO.generateCardViewList();
-		
-		int userId =  (int)session.getAttribute("userId");
+		List<CardView> cardList =  timelineBO.generateCardViewList(userId);
 		
 		model.addAttribute("userId", userId);
 		model.addAttribute("cardList", cardList);
 		model.addAttribute("view", "/timeline/timelineList");
 		return "template/layout";
 	}
-	
 	
 	
 	

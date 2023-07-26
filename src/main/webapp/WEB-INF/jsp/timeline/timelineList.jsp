@@ -47,8 +47,14 @@
 	  		
 	  		<%-- 좋아요 하트  --%>
 	  		<div class="d-flex content-bottom">
-		  		<a href="#" class="like-btn" data-like-id="${card.post.id}"><img width="20" src="https://www.iconninja.com/files/214/518/441/heart-icon.png"></a>
-		  		<a href="#"><img width="20" src="https://www.iconninja.com/files/527/809/128/heart-icon.png"></a>
+	  			<c:choose>
+	  				<c:when test = "${card.filledLike == false}">
+				  		<a href="#" class="like-btn" data-like-id="${card.post.id}"><img width="20" src="https://www.iconninja.com/files/214/518/441/heart-icon.png"></a>
+				  	</c:when>
+				  	<c:otherwise>
+				  		<a href="#" class="like-btn" data-like-id="${card.post.id}"><img width="20" src="https://www.iconninja.com/files/527/809/128/heart-icon.png"></a>
+				  	</c:otherwise>
+			  	</c:choose>
 		  		<div class="like mx-3 mt-1 font-weight-bold">좋아요 ${card.likeCount}개</div>
 		  	</div>
 		  	

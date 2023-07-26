@@ -21,7 +21,7 @@ public interface LikeMapper {
 				@Param("postId") int postId, 
 				@Param("userId") int userId);
 		
-		// 좋아요 갯수 
+		// 좋아요 갯수 (counting)
 		public int selectCountLikeByPostId(int postId);
 		
 	    

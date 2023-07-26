@@ -9,4 +9,15 @@
  		FROM
  			`post`
  	</select>
+ 	
+ 	<update id="revisePost" parameterType="map">
+ 		UPDATE `post`
+ 		SET 
+ 			`content` = #{content}
+ 			, `imagePath` = #{imagePath}
+ 		WHERE
+ 			`userId` = #{userId}
+ 		AND 
+ 			`id` = #{postId}
+ 	</update>
  </mapper>

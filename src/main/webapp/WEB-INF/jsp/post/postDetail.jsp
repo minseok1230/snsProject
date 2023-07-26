@@ -6,7 +6,7 @@
 <%-- 게시물 --%>
 <div class="content d-flex justify-content-center">
   	<div class="w-50">
-  			
+  			${post.id }
   			<%-- postId를 가져오기 위해서는 model을 통해서 가져온 다음 ajax로 넘겨야한다. --%>
   			<div class="getPostId d-none">${post.id}</div>
 	  		<c:if test="${not empty post.imagePath}">
@@ -77,6 +77,8 @@
 			/* postId 값을 넘겨야 하는데...ㅠㅠㅠ*/
 			let content = $('#content').val();
 			let file = $('#file').val();
+			let postId = ${post.id};
+			let preImagePath = "${post.imagePath}";
 			
 			// validation
 			if(!content) {
@@ -87,11 +89,13 @@
 			let formData = new FormData();
 			formData.append("content", content);
 			formData.append("file", $('#file')[0].files[0]);
+			formData.append("postId", postId);
+			formData.append("preImagePath", preImagePath);
 			
 			$.ajax({
 				// request
 				type: "post"
-				, url: "post/revise"
+				, url: "/post/revise"
 				, data: formData
 				, enctype: "multipart/form-data"
 				, processData: false
@@ -110,10 +114,8 @@
 				}
 			
 				, error:function(request, status, error){
-					alert("글을 저장하는데 실패했습니다");
+					alert("글을 저장하는데 실패했습니다. 관리자에게 문의해주세요.");
 				}
-				
-				
 			});
 		});
 	});

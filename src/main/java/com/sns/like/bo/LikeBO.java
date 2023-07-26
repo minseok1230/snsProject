@@ -22,7 +22,7 @@ public class LikeBO {
 			}
 		}
 		
-		// 좋아요 여부 확인
+		// 좋아요 여부 확인 (select)
 		public int getLikeToggle(int postId, int userId) {
 			return likeMapper.selectLikeToggle(postId, userId);
 		}
@@ -38,10 +38,20 @@ public class LikeBO {
 		}
 		
 		
-		// post별 좋아요 갯수 확인 
+		// 2. post별 좋아요 갯수 확인 
 		public int countLikeByPostId(int postId) {
 			return likeMapper.selectCountLikeByPostId(postId);
 		};
+		
+		// 3. 좋아요 클릭 여부 (하트)
+		public boolean generateLikeView(int postId, int userId) {
+			if (getLikeToggle(postId, userId) > 0) {
+				// 좋아요 존재
+				return true;
+			} else {
+				return false;
+			}
+		}
 		
 		
 }

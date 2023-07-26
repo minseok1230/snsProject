@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sns.common.FileManagerService;
+import com.sns.post.dao.PostMapper;
 import com.sns.post.dao.PostRepository;
 import com.sns.post.entity.PostEntity;
 
@@ -15,6 +16,9 @@ public class PostBO {
 	
 	@Autowired
 	private PostRepository postRepository;
+	
+	@Autowired
+	private PostMapper postMapper;
 	
 	@Autowired
 	private FileManagerService fileManager;
@@ -61,5 +65,18 @@ public class PostBO {
 	 */
 	public PostEntity getPostByPostIdAndUserId(int postId, int userId) {
 		return postRepository.findAllByIdAndUserId(postId, userId);
+	}
+	
+	
+	// 게시물 수정하기(나의 게시글 보기)
+	// postBO.revisePost(userId, postId , userLoginId, content, file);
+	public int revisePost(int userId, int postId, String userLoginId, String content, MultipartFile file, String preImagePath) {
+		String imagePath = preImagePath;
+		
+		// 이미지가 있으면 업로드 후 imagePath 받아옴
+			if (file != null) {
+				imagePath = fileManager.saveFile(userLoginId, file);
+			}
+		return postMapper.revisePost(userId, postId, content, imagePath);
 	}
 }

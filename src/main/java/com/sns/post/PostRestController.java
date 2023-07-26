@@ -32,6 +32,7 @@ public class PostRestController {
 			int userId = (int)session.getAttribute("userId");
 			String userLoginId = (String)session.getAttribute("userLoginId");
 			
+			
 			//db insert
 			postBO.addPost(userId, userLoginId, content, file);
 			
@@ -42,23 +43,34 @@ public class PostRestController {
 			return result;
 		}
 		
+		
+		// 글 수정(나의 게시물)
 		@PostMapping("/revise")
 		public Map<String, Object> revise(
 				@RequestParam("content") String content,
 				@RequestParam(value = "file", required = false) MultipartFile file,
+				@RequestParam("postId") int postId,
+				@RequestParam("preImagePath") String preImagePath,
 				HttpSession session){
 			
 			//session
 			int userId = (int)session.getAttribute("userId");
 			String userLoginId = (String)session.getAttribute("userLoginId");
 			
+			Map<String, Object> result = new HashMap<>();
+			
 			// userId & postId 일치할때만 변경 가능 
 			// db revise
-			//postBO.revisePost(userId, postId , userLoginId, content, file);
+			int isRevise =  postBO.revisePost(userId, postId , userLoginId, content, file, preImagePath);
 			
-			Map<String, Object> result = new HashMap<>();
-			result.put("code", 1);
-			result.put("result", "성공");
+			if (isRevise > 0) {
+				result.put("code", 1);
+				result.put("result", "성공");
+			} else {
+				result.put("code", 500);
+				result.put("errorMessage", "수정에 실패하였습니다.");
+			}
+			
 			
 			return result;
 		}

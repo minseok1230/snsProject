@@ -132,6 +132,7 @@
 			
 			// url , 데이터 넘기기
 			let url = $(this).attr('action')
+			// 값들 전부 넘기기
 			let params = $(this).serialize();
 			
 			$.post(url, params)

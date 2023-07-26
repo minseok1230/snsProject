@@ -33,7 +33,11 @@ public class UserController {
 		return "template/layout";
 	}
 	
-	
+	/**
+	 * 로그아웃
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/sign_out")
 	public String signOut(HttpSession session) {
 		session.removeAttribute("userId");
