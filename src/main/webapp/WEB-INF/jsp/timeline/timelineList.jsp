@@ -32,11 +32,17 @@
 	  		<div class="content-menu mt-5 d-flex align-items-center justify-content-between">
 	  			<div class="font-weight-bold ml-2">${card.user.loginId}</div>
 	  			<div class="d-flex">
-	  			<%-- 팔로우 : 내가 이미 팔로우 하고있는사람도 안보이게 할것 --%>
+	  				<%-- 팔로우 : 내가 이미 팔로우 하고있는사람도 안보이게 할것 --%>
 	  				<c:if test="${card.user.id != userId }">
-	  					<button class="followBtn w-btn bg-secondary" type="button">팔로우</button>
+	  					<button class="followBtn w-btn bg-secondary" type="button" data-user-id="${card.user.id}">팔로우</button>
 	  				</c:if>
-	  				<a href="" class="mr-2"><img width="30" src="https://www.iconninja.com/files/860/824/939/more-icon.png"></a>
+	  				
+	  				<%-- 더보기 ... -> 내가 쓴 글일 떄만 노출 --%>
+	  				<c:if test="${userId eq card.post.userId}">
+	  					<a href="#" class="mr-2 more-btn" data-toggle="modal" data-target="#modal" data-post-id="${card.post.id}">
+	  						<img width="30" src="https://www.iconninja.com/files/860/824/939/more-icon.png">
+	  					</a>
+	  				</c:if>
 	  			</div>
 	  		</div>
 	  		
@@ -98,6 +104,22 @@
 	  		
 	  	</c:forEach>
   	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal">
+	<%-- modal_sm: 작은 모달 --%>
+	<%-- modal-dialog-centered: 모달창 수직기준 가운데 위치--%>
+	<div class="modal-dialog modal-sm modal-dialog-centered">
+		<div class="modal-content text-center">
+      		<div class="py-3 border-bottom">	
+      			<a href="#" id="deletePostBtn">삭제하기</a>
+      		</div>
+      		<div class="py-3">	
+      			<a href="#" data-dismiss="modal">취소하기</a>
+      		</div>
+    	</div>
+	</div>
 </div>
 
 
@@ -276,10 +298,53 @@ $(document).ready(function() {
 		});
 	});
 	
+	// 글 삭제(... 더보기 버튼 클릭) => 모달 띄우기 
+	$('.more-btn').on('click', function(e){
+		e.preventDefault(); // a 태그 위로 올라감 방지
+		
+		let postId = $(this).data('post-id'); // getting
+		//alert(postId);
+		
+		// 한개인 모달 태그에(재활용) data-post-id를 심어줌
+		$('#modal').data('post-id', postId); // setting
+	});
+	
+	// 모달 안에 있는 삭제하기 클릭 => 진짜 삭제
+	$('#modal #deletePostBtn').on('click', function(e){
+		e.preventDefault();
+		let postId = $('#modal').data('post-id');
+		//alert(postId);
+		
+		$.ajax({
+			//request
+			type: "delete"
+			, url: "/post/delete"
+			, data: {"postId" : postId}
+			
+			//response
+			, success: function(data){
+				if (data.code == 1){
+					alert("게시물이 삭제되었습니다.");
+					location.href="/timeline/timeline_view";
+				} else{
+					alert(data.errorMessage)
+				}
+			}
+			, error: function(request, status, error){
+				alert("게시물 삭제 실패했습니다. 관리자에게 문의해주세요");
+			}
+			
+		});
+	});
+	
+	
 	
 	// 팔로우 버튼 클릭
-	$('.followBtn').on('click', function(){
+	$('.followBtn').on('click', function(e){
+		e.preventDefault();
 		//alert("ddd");
+		let userId = $(this).data('user-id');
+		alert(userId);
 	})
 	
 	

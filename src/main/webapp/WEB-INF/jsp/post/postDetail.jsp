@@ -6,7 +6,6 @@
 <%-- 게시물 --%>
 <div class="content d-flex justify-content-center">
   	<div class="w-50">
-  			${post.id }
   			<%-- postId를 가져오기 위해서는 model을 통해서 가져온 다음 ajax로 넘겨야한다. --%>
   			<div class="getPostId d-none">${post.id}</div>
 	  		<c:if test="${not empty post.imagePath}">
@@ -78,7 +77,7 @@
 			let content = $('#content').val();
 			let file = $('#file').val();
 			let postId = ${post.id};
-			let preImagePath = "${post.imagePath}";
+			// let preImagePath = "${post.imagePath}";
 			
 			// validation
 			if(!content) {
@@ -90,7 +89,7 @@
 			formData.append("content", content);
 			formData.append("file", $('#file')[0].files[0]);
 			formData.append("postId", postId);
-			formData.append("preImagePath", preImagePath);
+			// formData.append("preImagePath", preImagePath);
 			
 			$.ajax({
 				// request

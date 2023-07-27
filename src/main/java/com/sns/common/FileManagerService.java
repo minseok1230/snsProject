@@ -6,12 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileManagerService {
 
+		private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 		// 실제 업로드가 된 이미지가 저장될 경로(서버 was)
 		public static final String FILE_UPLOAD_PATH = "D:\\choiminseok\\6_spring_project\\sns\\images/";
 		
@@ -42,6 +46,34 @@ public class FileManagerService {
 			}
 			
 			return "/images/" + directoryName + file.getOriginalFilename();
+		}
+		
+		// 파일 삭제 메소드
+		// input: imagePath
+		// output: void
+		public void deleteFile (String imagePath) {
+			// db주소 원래의 파일 경로로 변환
+			Path path = Paths.get(FILE_UPLOAD_PATH + imagePath.replace("/images/", "")); 
+			
+			// 삭제할 파일이 존재할 경우 이미지/폴더 삭제 
+			if (Files.exists(path)) {
+				//이미지 삭제
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					logger.warn("######[FileManagerService 이미지 삭제 실패] imagePath:{}", imagePath);
+				}
+				
+				// 폴더 삭제
+				path = path.getParent();
+				if (Files.exists(path)) {
+					try {
+						Files.delete(path);
+					} catch (IOException e) {
+						logger.info("#####[FileManagerService 폴더 삭제 실패] imagePath:{}", imagePath);
+					}
+				}
+			}
 			
 		}
 }

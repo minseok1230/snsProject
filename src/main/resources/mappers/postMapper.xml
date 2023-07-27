@@ -10,14 +10,50 @@
  			`post`
  	</select>
  	
- 	<update id="revisePost" parameterType="map">
+ 	<update id="updatePostByUserIdAndPostId" parameterType="map">
  		UPDATE `post`
  		SET 
  			`content` = #{content}
+ 			<!-- imagePath가 있을 때만 수정한다. -->
+ 			<if test="imagePath != null">
  			, `imagePath` = #{imagePath}
+ 			</if>
  		WHERE
  			`userId` = #{userId}
  		AND 
  			`id` = #{postId}
  	</update>
+ 	
+ 	<delete id="deleteCommentByPostId" parameterType="int">
+ 		DELETE FROM `comment`
+ 		WHERE
+ 			`postId` = #{postId}
+ 	</delete>
+ 	
+ 	<delete id="deleteLikeByPostId" parameterType="int">
+ 		DELETE FROM `like`
+ 		WHERE
+ 			`postId` = #{postId}
+ 	</delete>
+ 	
+ 	<delete id="deletePostByPostIdAndUserId" parameterType="map">
+ 		DELETE FROM `post`
+ 		WHERE
+ 			`id` = #{postId}
+ 		AND
+ 			`userId` = #{userId}
+ 	</delete>
  </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
