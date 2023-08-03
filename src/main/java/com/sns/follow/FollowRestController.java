@@ -10,12 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FollowRestController {
 
 	
-		// 팔로우 하기
-		@RequestMapping("/create")
-		public Map<String, Object> create(){
-			
-		}
-	
+		
 	
 	
 }
